@@ -1,0 +1,324 @@
+{
+  "winner_model": "mistral:7b",
+  "judge_model": "llama3.1:8b",
+  "aggregate": {
+    "total_items": 31,
+    "mean_correctness": 3.2903225806451615,
+    "mean_specificity": 2.6774193548387095,
+    "mean_grounding": 2.6451612903225805,
+    "hallucination_rate": 0.4838709677419355
+  },
+  "judgements": [
+    {
+      "action_item_id": "act_f181b2c645",
+      "task": "Design a remote control with basic functions and easy-to-understand symbols",
+      "correctness_score": 4,
+      "specificity_score": 3,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is mostly correct, but it lacks specificity about what 'basic functions' and 'easy-to-understand symbols' mean. The evidence from the transcript supports the idea of a user-friendly design.",
+      "meeting_id": "48"
+    },
+    {
+      "action_item_id": "act_5bf3d5153d",
+      "task": "Consider incorporating a menu display similar to mobile phones",
+      "correctness_score": 4,
+      "specificity_score": 2,
+      "grounding_score": 4,
+      "hallucination_detected": false,
+      "reasoning": "The task is mostly correct, but it lacks specificity about what kind of menu display and how it would be similar to mobile phones. The evidence from the transcript supports the idea of a simplified design.",
+      "meeting_id": "48"
+    },
+    {
+      "action_item_id": "act_3328ede4e5",
+      "task": "Explore the possibility of an extra button for large print",
+      "correctness_score": 2,
+      "specificity_score": 1,
+      "grounding_score": 3,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and lacks specificity about what 'large print' means. The evidence from the transcript does not support this idea.",
+      "meeting_id": "48"
+    },
+    {
+      "action_item_id": "act_c6b41aafb8",
+      "task": "Consider a flip-top remote control design",
+      "correctness_score": 1,
+      "specificity_score": 1,
+      "grounding_score": 2,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and lacks specificity about what 'flip-top' means. The evidence from the transcript does not support this idea.",
+      "meeting_id": "48"
+    },
+    {
+      "action_item_id": "act_b866160366",
+      "task": "Discuss the need for a fashionable and stylish design",
+      "correctness_score": 1,
+      "specificity_score": 1,
+      "grounding_score": 2,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and lacks specificity about what 'fashionable' and 'stylish' mean. The evidence from the transcript does not support this idea.",
+      "meeting_id": "48"
+    },
+    {
+      "action_item_id": "act_fb6200110a",
+      "task": "Marketing Expert to research current market trends and consumer preferences",
+      "correctness_score": 5,
+      "specificity_score": 4,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is specific, relevant, and supported by evidence from the meeting transcript. The speaker explicitly mentions the need to be open to current market trends.",
+      "meeting_id": "46"
+    },
+    {
+      "action_item_id": "act_43fd1491a1",
+      "task": "Industrial Designer to determine the materials and internal components of the remote control",
+      "correctness_score": 4,
+      "specificity_score": 3,
+      "grounding_score": 2,
+      "hallucination_detected": false,
+      "reasoning": "The task is somewhat relevant, but not explicitly mentioned in the meeting transcript. The speaker mentions the need for a high-responsive product, but does not specify materials or internal components.",
+      "meeting_id": "46"
+    },
+    {
+      "action_item_id": "act_6b5258db68",
+      "task": "User Interface Designer to focus on the technical design and usability aspects of the remote control",
+      "correctness_score": 5,
+      "specificity_score": 4,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is specific, relevant, and supported by evidence from the meeting transcript. The speaker explicitly mentions the need for a user-friendly design.",
+      "meeting_id": "46"
+    },
+    {
+      "action_item_id": "act_1e4496c804",
+      "task": "Marketing Expert to present ideas for marketing the product",
+      "correctness_score": 3,
+      "specificity_score": 2,
+      "grounding_score": 1,
+      "hallucination_detected": true,
+      "reasoning": "The task is somewhat relevant, but not explicitly mentioned in the meeting transcript. The speaker mentions the need for marketing ideas, but does not provide any specific guidance or evidence to support this task.",
+      "meeting_id": "46"
+    },
+    {
+      "action_item_id": "act_19d56c88f2",
+      "task": "Finalize the design of the remote control",
+      "correctness_score": 5,
+      "specificity_score": 4,
+      "grounding_score": 3,
+      "hallucination_detected": false,
+      "reasoning": "The task is clear and specific, but it lacks grounding in the meeting transcript. The speaker discusses design aspects, but there's no explicit mention of finalizing the design.",
+      "meeting_id": "20"
+    },
+    {
+      "action_item_id": "act_01520f09fe",
+      "task": "Consider adding a cover for the buttons",
+      "correctness_score": 2,
+      "specificity_score": 3,
+      "grounding_score": 1,
+      "hallucination_detected": true,
+      "reasoning": "The task is somewhat vague and lacks grounding in the meeting transcript. The speaker discusses button design, but there's no explicit mention of adding a cover.",
+      "meeting_id": "20"
+    },
+    {
+      "action_item_id": "act_1fdce0c8f9",
+      "task": "Evaluate the cost of the new design",
+      "correctness_score": 4,
+      "specificity_score": 5,
+      "grounding_score": 4,
+      "hallucination_detected": false,
+      "reasoning": "The task is clear and specific, and it's grounded in the meeting transcript. The speaker discusses cost aspects of the new design.",
+      "meeting_id": "20"
+    },
+    {
+      "action_item_id": "act_efc47a4034",
+      "task": "Assess the market appeal of the new design",
+      "correctness_score": 3,
+      "specificity_score": 2,
+      "grounding_score": 1,
+      "hallucination_detected": true,
+      "reasoning": "The task is somewhat vague and lacks grounding in the meeting transcript. The speaker discusses market appeal, but there's no explicit mention of assessing it.",
+      "meeting_id": "20"
+    },
+    {
+      "action_item_id": "act_493589150c",
+      "task": "Explore the cost implications of adding articulation to the remote control design",
+      "correctness_score": 4,
+      "specificity_score": 3,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is specific and relevant to the discussion, but it could be more precise in its wording. The evidence provided supports the need for cost consideration.",
+      "meeting_id": "88"
+    },
+    {
+      "action_item_id": "act_da4d375fd4",
+      "task": "Consider adding a rubber grip to the remote control for improved ergonomics",
+      "correctness_score": 5,
+      "specificity_score": 5,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is specific, relevant, and supported by evidence. It addresses a clear need for ergonomic improvement.",
+      "meeting_id": "88"
+    },
+    {
+      "action_item_id": "act_4bf4a56d7b",
+      "task": "Investigate the possibility of a brighter color for the remote control to make it easier to find",
+      "correctness_score": 3,
+      "specificity_score": 2,
+      "grounding_score": 1,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and lacks clear evidence. It seems like a superficial solution rather than a thoughtful design consideration.",
+      "meeting_id": "88"
+    },
+    {
+      "action_item_id": "act_1bd0cb4d43",
+      "task": "Research the feasibility and cost of adding voice response to the remote control",
+      "correctness_score": 2,
+      "specificity_score": 3,
+      "grounding_score": 2,
+      "hallucination_detected": true,
+      "reasoning": "The task is somewhat vague, and there's no clear evidence supporting its necessity. Voice response might not be the most relevant feature for this remote control.",
+      "meeting_id": "88"
+    },
+    {
+      "action_item_id": "act_681c9f6e27",
+      "task": "Consider offering multiple color options for the remote control",
+      "correctness_score": 4,
+      "specificity_score": 3,
+      "grounding_score": 2,
+      "hallucination_detected": false,
+      "reasoning": "The task is relevant, but it could be more specific in its wording. The evidence provided supports the idea of customization.",
+      "meeting_id": "88"
+    },
+    {
+      "action_item_id": "act_fd0082dc96",
+      "task": "Explore the potential of a more bio-morphic form in the articulation for increased sales",
+      "correctness_score": 3,
+      "specificity_score": 2,
+      "grounding_score": 1,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and lacks clear evidence. It seems like a superficial solution rather than a thoughtful design consideration.",
+      "meeting_id": "88"
+    },
+    {
+      "action_item_id": "act_4f49307d51",
+      "task": "Conduct market research to gauge the impact of additional features on sales",
+      "correctness_score": 5,
+      "specificity_score": 5,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is specific, relevant, and supported by evidence. It addresses a clear need for market research.",
+      "meeting_id": "88"
+    },
+    {
+      "action_item_id": "act_6de8b3096c",
+      "task": "Redesign the product",
+      "correctness_score": 3,
+      "specificity_score": 2,
+      "grounding_score": 4,
+      "hallucination_detected": false,
+      "reasoning": "The task is somewhat vague and does not directly relate to any specific discussion in the meeting. However, it is grounded in the general idea of improving the product.",
+      "meeting_id": "111"
+    },
+    {
+      "action_item_id": "act_0221f2f0ec",
+      "task": "Implement a feature to easily select and distribute slides",
+      "correctness_score": 5,
+      "specificity_score": 5,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "This task is directly related to the discussion about sharing images and distributing slides. It is specific, correct, and well-grounded in the meeting transcript.",
+      "meeting_id": "111"
+    },
+    {
+      "action_item_id": "act_a89cdeafab",
+      "task": "Consider adding a radar function",
+      "correctness_score": 1,
+      "specificity_score": 1,
+      "grounding_score": 1,
+      "hallucination_detected": true,
+      "reasoning": "This task is not supported by any evidence in the meeting transcript. It appears to be an unrelated idea and may be considered a hallucination.",
+      "meeting_id": "111"
+    },
+    {
+      "action_item_id": "act_437edccc1f",
+      "task": "Sarah to research current cost of competition",
+      "correctness_score": 5,
+      "specificity_score": 4,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is clear and specific, and the evidence provided in the transcript supports the need for this research.",
+      "meeting_id": "122"
+    },
+    {
+      "action_item_id": "act_256ae6cbc5",
+      "task": "Steph to look at ergonomics",
+      "correctness_score": 4,
+      "specificity_score": 3,
+      "grounding_score": 2,
+      "hallucination_detected": false,
+      "reasoning": "The task is somewhat vague, and the evidence provided does not directly support the need for this research. However, ergonomics was mentioned in the transcript as a consideration.",
+      "meeting_id": "122"
+    },
+    {
+      "action_item_id": "act_d1e85ec82c",
+      "task": "Kate to look at cost and feasibility of various possibilities",
+      "correctness_score": 3,
+      "specificity_score": 2,
+      "grounding_score": 1,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague, and the evidence provided does not support the need for this research. This task appears to be a hallucination, as it was not discussed in the transcript.",
+      "meeting_id": "122"
+    },
+    {
+      "action_item_id": "act_154da30420",
+      "task": "Typing up minutes and final report",
+      "correctness_score": 5,
+      "specificity_score": 5,
+      "grounding_score": 5,
+      "hallucination_detected": false,
+      "reasoning": "The task is clear, specific, and directly supported by the transcript. Minutes and reports are typically taken after meetings.",
+      "meeting_id": "122"
+    },
+    {
+      "action_item_id": "act_b41cde1b1b",
+      "task": "Decision on the form of energy (battery, kinetic or solar)",
+      "correctness_score": 2,
+      "specificity_score": 1,
+      "grounding_score": 0,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and not supported by the transcript. Energy sources were not discussed in the meeting.",
+      "meeting_id": "122"
+    },
+    {
+      "action_item_id": "act_85548eb9f4",
+      "task": "Decision on the case (plastic or rubber)",
+      "correctness_score": 2,
+      "specificity_score": 1,
+      "grounding_score": 0,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and not supported by the transcript. Case materials were not discussed in the meeting.",
+      "meeting_id": "122"
+    },
+    {
+      "action_item_id": "act_67e7eb3c7a",
+      "task": "Decision on the user interface concept",
+      "correctness_score": 2,
+      "specificity_score": 1,
+      "grounding_score": 0,
+      "hallucination_detected": true,
+      "reasoning": "The task is vague and not supported by the transcript. User interface concepts were not discussed in the meeting.",
+      "meeting_id": "122"
+    },
+    {
+      "action_item_id": "act_29cb678d32",
+      "task": "Prototype creation using modelling clay",
+      "correctness_score": 1,
+      "specificity_score": 0,
+      "grounding_score": 0,
+      "hallucination_detected": true,
+      "reasoning": "The task is completely unrelated to the discussion in the transcript. Modelling clay was not mentioned.",
+      "meeting_id": "122"
+    }
+  ],
+  "human_spot_check": []
+}

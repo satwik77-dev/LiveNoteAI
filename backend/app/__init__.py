@@ -1,0 +1,1 @@
+"""LiveNote backend application package."""

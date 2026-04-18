@@ -1,0 +1,42 @@
+version: "3.9"
+
+# Local development stack: backend + Ollama side-car
+# Usage:
+#   docker compose up --build
+#   Then: docker exec -it livenote-ollama ollama pull mistral:7b
+#         docker exec -it livenote-ollama ollama pull llama3.1:8b
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:7860"
+    environment:
+      - LLM_MODE=ollama
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=mistral:7b
+      - DIARIZATION_ENABLED=false
+      - LIVE_INTELLIGENCE_ENABLED=true
+      - WHISPER_MODEL_SIZE=small
+      - WHISPER_COMPUTE_TYPE=int8
+      - ALLOWED_ORIGINS=http://localhost:5173
+      - TEMP_AUDIO_DIR=/tmp/livenote_audio
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    volumes:
+      - /tmp/livenote_audio:/tmp/livenote_audio
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: livenote-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  ollama_models:
