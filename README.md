@@ -70,7 +70,7 @@ LiveNote processes meeting audio through a dual-cadence pipeline — fast transc
   
 - **Trust & Extraction** : This is what separates LiveNote from a simple prompt-to-JSON wrapper. A 7-rule trust validator checks every LLM output before it reaches the UI: owner validation, evidence timestamp verification, deadline parsing, JSON schema checks, duplicate detection, human-lock preservation, and hallucination filtering via evidence requirements.
   
-- **Structured Outputs** : Theseare delivered to the LiveNote Web App in real time via WebSocket. Every output is human-editable — once a user edits any field, it is permanently locked and the AI will never overwrite it. Meetings end with a final consolidation pass that refines and deduplicates all outputs, then exports to JSON or PDF.
+- **Structured Outputs** : These are delivered to the LiveNote Web App in real time via WebSocket. Every output is human-editable — once a user edits any field, it is permanently locked and the AI will never overwrite it. Meetings end with a final consolidation pass that refines and deduplicates all outputs, then exports to JSON or PDF.
 
 ## Repository Structure
 
