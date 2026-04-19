@@ -171,6 +171,11 @@ Here is the preview of the UI I designed :
 - After that if we click "Live Meeting" (For Live Meeting Audio) or "Demo Audio" (For Uploading Meeting Audio file post meeting) it navigates to this page and Trasncripts & Meeting Intelligence are generated something like this:
 <img width="1916" height="993" alt="Screenshot 2026-04-16 at 12 26 08" src="https://github.com/user-attachments/assets/008ded6a-c32d-4efa-9b1b-82cde9c7d142" />
 
+This is how Output looks after we proceed to the end of the Meeting:
+<img width="1903" height="914" alt="Screenshot 2026-04-19 at 11 30 04" src="https://github.com/user-attachments/assets/f7c61b3f-5e91-46c5-85fc-1b60da35409f" />
+<img width="1921" height="984" alt="Screenshot 2026-04-19 at 11 30 11" src="https://github.com/user-attachments/assets/d32d8234-0346-42ef-bec8-a22777798deb" />
+
+
 
 ## Project Demo
 
