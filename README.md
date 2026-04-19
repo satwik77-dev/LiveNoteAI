@@ -63,10 +63,14 @@ The system runs entirely on a laptop. No cloud vendor sees your audio.
 ### Key architectural decisions (locked)
 
 LiveNote processes meeting audio through a dual-cadence pipeline — fast transcription every 15 seconds and deeper intelligence extraction every 60 seconds.
-Speech → Text (Module 1) captures browser audio in 15-second chunks, runs faster-whisper (small, int8) for transcription, and optionally applies pyannote 3.1 for speaker diarization. A dual-output noise filter produces a lightly cleaned transcript for the UI and an aggressively filtered version for the LLM.
-Text → Intelligence (Module 2) accumulates 4 ASR chunks into a 60-second window, then sends it to Mistral 7B (served locally via Ollama or via Groq for cloud deployment) with the current memory state and previous window context. The LLM extracts structured JSON — summaries, action items, decisions, and risks.
-Trust & Extraction is what separates LiveNote from a simple prompt-to-JSON wrapper. A 7-rule trust validator checks every LLM output before it reaches the UI: owner validation, evidence timestamp verification, deadline parsing, JSON schema checks, duplicate detection, human-lock preservation, and hallucination filtering via evidence requirements.
-Structured Outputs are delivered to the LiveNote Web App in real time via WebSocket. Every output is human-editable — once a user edits any field, it is permanently locked and the AI will never overwrite it. Meetings end with a final consolidation pass that refines and deduplicates all outputs, then exports to JSON or PDF.
+
+- **Speech → Text (Module 1)** : It captures browser audio in 15-second chunks, runs faster-whisper (small, int8) for transcription, and optionally applies pyannote 3.1 for speaker diarization. A dual-output noise filter produces a lightly cleaned transcript for the UI and an aggressively filtered version for the LLM.
+  
+- **Text → Intelligence (Module 2)** : It accumulates 4 ASR chunks into a 60-second window, then sends it to Mistral 7B (served locally via Ollama or via Groq for cloud deployment) with the current memory state and previous window context. The LLM extracts structured JSON — summaries, action items, decisions, and risks.
+  
+- **Trust & Extraction** : This is what separates LiveNote from a simple prompt-to-JSON wrapper. A 7-rule trust validator checks every LLM output before it reaches the UI: owner validation, evidence timestamp verification, deadline parsing, JSON schema checks, duplicate detection, human-lock preservation, and hallucination filtering via evidence requirements.
+  
+- **Structured Outputs** : Theseare delivered to the LiveNote Web App in real time via WebSocket. Every output is human-editable — once a user edits any field, it is permanently locked and the AI will never overwrite it. Meetings end with a final consolidation pass that refines and deduplicates all outputs, then exports to JSON or PDF.
 
 ## Repository Structure
 
