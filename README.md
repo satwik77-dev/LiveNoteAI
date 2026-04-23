@@ -1,8 +1,8 @@
 # LiveNote
 
-**Real-time, open-source meeting intelligence that runs on your own machine.**
+**Real-time, Open-source meeting intelligence that runs on your own machine.**
 
-LiveNote captures live meeting audio from the browser, transcribes it incrementally, and extracts structured intelligence — running summaries, action items, decisions, and risks — using open-source LLMs. All of it streams into a React dashboard where a human can correct anything in real time. It is a zero-cost, self-hostable alternative to Zoom AI Companion and Otter.ai.
+LiveNote captures Live meeting audio from the browser, transcribes it incrementally, and extracts Structured intelligence which includes Running Summaries, Action items, Decisions, and Risks using open-source LLMs. All of it streams into a React dashboard where a human can correct anything in real time. It is a Zero-cost, Self-hostable alternative to paid tools like Zoom AI Companion and Otter.ai.
 
 ---
 
@@ -23,11 +23,11 @@ LiveNote captures live meeting audio from the browser, transcribes it incrementa
 
 ## Problem Statement
 
-Live meeting assistants like **Zoom AI Companion**, **Otter.ai**, and **Fireflies.ai** have become the default way teams capture meeting intelligence — summaries, action items, decisions. But every mainstream option shares the same three constraints:
+Live meeting assistants like **Zoom AI Companion**, **Otter.ai**, and **Fireflies.ai** have become the default way teams capture Meeting Intelligence — summaries, action items, decisions. But every mainstream option shares the same three constraints:
 
-- **Paywalled.** The useful features sit behind per-seat subscriptions.
-- **Cloud-only.** Your audio is uploaded to a third-party vendor. In regulated industries (healthcare, legal, finance, research interviews), this is a non-starter.
-- **Proprietary & opaque.** You cannot inspect how summaries are generated, cannot correct the model mid-meeting, and cannot run the pipeline on internal infrastructure.
+- **Paywalled:** The useful features sit behind per-seat subscriptions.
+- **Cloud-only:** Your audio is uploaded to a third-party vendor. In regulated industries (healthcare, legal, finance, research interviews), this is a non-starter.
+- **Proprietary & Opaque:** You cannot inspect how summaries are generated, cannot correct the model mid-meeting, and cannot run the pipeline on internal infrastructure.
 
 There is no open, end-to-end, self-hostable system that does real-time meeting intelligence with human-in-the-loop correction.
 
@@ -35,7 +35,7 @@ There is no open, end-to-end, self-hostable system that does real-time meeting i
 
 **LiveNote** is an open-source real-time meeting intelligence pipeline. It is designed around three ideas:
 
-1. **Dual-cadence processing.** Transcripts update every **15 seconds** (fast), intelligence (summary + action items + decisions + risks) updates every **60 seconds** (slower but more coherent). This matches how humans actually read a live meeting.
+1. **Dual-cadence processing.** Transcripts update every **15 seconds** (fast), Intelligence (summary + action items + decisions + risks) updates every **60 seconds** (slower but more coherent). This matches how humans actually read a live meeting.
 2. **Human-in-the-loop edits.** Any field the user edits becomes `human_locked=true` — the AI is never allowed to overwrite it. This is the most safety-critical invariant in the system.
 3. **Trust-validated extraction.** Every LLM output passes through a seven-rule trust validator (owner validity, evidence-timestamp checks, deadline parsing, schema validation, duplicate detection, lock preservation, evidence requirement) before reaching the UI.
 
@@ -57,58 +57,20 @@ The system runs entirely on a laptop. No cloud vendor sees your audio.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  subgraph Browser["Browser (React + Vite)"]
-    MIC[MediaRecorder<br/>15s chunks]
-    UI[Dashboard<br/>Transcript · Summary · Actions · Decisions · Risks]
-  end
+<img width="1268" height="628" alt="Screenshot 2026-04-09 at 01 15 40" src="https://github.com/user-attachments/assets/0c819df6-e540-4e10-916b-5df2d7d0a13c" />
 
-  subgraph Backend["FastAPI Backend"]
-    WS[WebSocket<br/>/ws/meeting]
-    CP[ChunkProcessor<br/>dual-cadence queue]
-
-    subgraph M1["Module 1 — Speech Pipeline"]
-      ASR[faster-whisper]
-      DIA[pyannote 3.1]
-      ALIGN[Speaker alignment]
-      NF[Noise filter<br/>display + LLM outputs]
-    end
-
-    SM[SessionManager<br/>rolling memory<br/>human-lock merge]
-
-    subgraph M2["Module 2 — Intelligence"]
-      PB[Prompt Builder]
-      LLM[LLM Client<br/>Ollama · Groq · OpenAI-compat]
-      TV[Trust Validator<br/>7 rules]
-      MM[Memory Manager]
-    end
-
-    EXP[Export Utils<br/>JSON · PDF]
-  end
-
-  MIC -- audio_base64 --> WS
-  WS --> CP
-  CP -- every 15s --> M1
-  M1 --> SM
-  SM -- every 60s / 4 chunks --> M2
-  M2 --> SM
-  SM -- transcript_update --> WS
-  SM -- intelligence_update --> WS
-  WS -- JSON events --> UI
-  UI -- human_* edits --> WS
-  SM --> EXP
-  EXP -- consolidation_complete --> WS
-```
 
 ### Key architectural decisions (locked)
 
-- **Dual-output noise filter** — `display_utterances` (lightly filtered, for UI) and `llm_utterances` (aggressively filtered, for LLM) are produced from the same chunk.
-- **Queue overflow policy** — the *newest* chunk is rejected (not the oldest), so the meeting record never has gaps.
-- **Final consolidation pass** — on `meeting_end`, any partial ASR chunk and partial LLM window are flushed, then a consolidation pass deduplicates items and refines the summary. Human-locked fields are never touched.
-- **Four deployment modes** via feature flags: `DIARIZATION_ENABLED` × `LIVE_INTELLIGENCE_ENABLED`.
+LiveNote processes meeting audio through a dual-cadence pipeline — fast transcription every 15 seconds and deeper intelligence extraction every 60 seconds.
 
-The full architecture specification lives in [`LiveNote_Final_Architecture.md`](./LiveNote_Final_Architecture.md).
+- **Speech → Text (Module 1)** : It captures browser audio in 15-second chunks, runs faster-whisper (small, int8) for transcription, and optionally applies pyannote 3.1 for speaker diarization. A dual-output noise filter produces a lightly cleaned transcript for the UI and an aggressively filtered version for the LLM.
+  
+- **Text → Intelligence (Module 2)** : It accumulates 4 ASR chunks into a 60-second window, then sends it to Mistral 7B (served locally via Ollama or via Groq for cloud deployment) with the current memory state and previous window context. The LLM extracts structured JSON — summaries, action items, decisions, and risks.
+  
+- **Trust & Extraction** : This is what separates LiveNote from a simple prompt-to-JSON wrapper. A 7-rule trust validator checks every LLM output before it reaches the UI: owner validation, evidence timestamp verification, deadline parsing, JSON schema checks, duplicate detection, human-lock preservation, and hallucination filtering via evidence requirements.
+  
+- **Structured Outputs** : These are delivered to the LiveNote Web App in real time via WebSocket. Every output is human-editable — once a user edits any field, it is permanently locked and the AI will never overwrite it. Meetings end with a final consolidation pass that refines and deduplicates all outputs, then exports to JSON or PDF.
 
 ## Repository Structure
 
@@ -202,9 +164,23 @@ During a meeting, you see:
 - Intelligence panels refreshing **~75 seconds** after each new window.
 - A lock indicator on any field a human has edited — the AI will never overwrite it.
 
-> Add screenshots to `docs/screenshots/` and reference them here, e.g.:
->
-> `![Dashboard](docs/screenshots/dashboard.png)`
+Here is the preview of the UI I designed :
+
+- This is my Landing page of LiveNote :
+<img width="1911" height="991" alt="Screenshot 2026-04-16 at 12 44 49" src="https://github.com/user-attachments/assets/0de74dde-5e88-4a0e-abdd-dfc0416569b6" />
+- After that if we click "Live Meeting" (For Live Meeting Audio) or "Demo Audio" (For Uploading Meeting Audio file post meeting) it navigates to this page and Trasncripts & Meeting Intelligence are generated something like this:
+<img width="1916" height="993" alt="Screenshot 2026-04-16 at 12 26 08" src="https://github.com/user-attachments/assets/008ded6a-c32d-4efa-9b1b-82cde9c7d142" />
+
+This is how Output looks after we proceed to the end of the Meeting:
+<img width="1903" height="914" alt="Screenshot 2026-04-19 at 11 30 04" src="https://github.com/user-attachments/assets/f7c61b3f-5e91-46c5-85fc-1b60da35409f" />
+<img width="1921" height="984" alt="Screenshot 2026-04-19 at 11 30 11" src="https://github.com/user-attachments/assets/d32d8234-0346-42ef-bec8-a22777798deb" />
+
+
+
+## Project Demo
+
+> 🎬 **[Watch the full 15-minute project demo →](https://drive.google.com/drive/folders/1VarVoY8fF198h9aOrPDnsG1DDhRJYD9d?usp=sharing)**. It Covers system architecture, end-to-end pipeline walkthrough, model evaluation results, and a live demo of the working application.
+
 
 ## Running Locally
 
@@ -373,11 +349,6 @@ Mistral produced **~2.5× the ROUGE-1** of LLaMA 3.1 8B on the same inputs. It p
 
 Correctness is good but nearly half of raw extractions contain some hallucination — **which is exactly why the 7-rule trust validator exists**. In production, any item failing the evidence-timestamp or owner-validity rule is marked `needs_review=true` and surfaced with a warning chip in the UI instead of being silently shown.
 
-### What was *not* done (by design)
-
-- **No fine-tuning.** All LLMs are used as-is via Ollama. Intelligence extraction is prompt-engineered with structured JSON output and defended by the trust validator.
-- **No cloud dependency during evaluation.** The pipeline runs locally so the results are reproducible on any laptop.
-
 ## Use Cases
 
 - **Team standups and planning meetings** — automatic action items with owners and deadlines.
@@ -389,23 +360,17 @@ Correctness is good but nearly half of raw extractions contain some hallucinatio
 
 ## Author & Contributing
 
-**Satwik Yarapothini** — capstone author and maintainer.
+**Sai Satwik Yarapothini** — Capstone Project Author and Maintainer.
 
-- Email: **satwikyarapothini@gmail.com**
+- Email: **saisatwi.yarapot@ufl.edu**
 - GitHub: [@satwik77-dev](https://github.com/satwik77-dev)
 
-### Open Source
+### Open Source Contributions
 
-LiveNote is **open source and contributions are welcome**. If you want to add a new LLM provider, a new export format, a new ASR language, a better noise filter, or anything else — open an issue first to discuss the direction, then send a pull request.
-
-**Ground rule:** the architectural decisions in [`LiveNote_Final_Architecture.md`](./LiveNote_Final_Architecture.md) are locked — things like the dual cadence, the human-lock invariant, the dual-output noise filter, and the seven trust-validator rules should not be changed without discussion, because they are what make the system safe.
+LiveNote is **Open source and contributions are welcome**. If you want to add a new LLM provider, a new export format, a new ASR language, a better noise filter, or anything else — open an issue first to discuss the direction, then send a pull request.
 
 To propose a change:
 
 1. Open a GitHub issue describing the motivation.
 2. For anything touching architecture or data models, tag it `rfc`.
 3. For bug fixes or new providers / exports, just send a PR.
-
-### License
-
-Released under the **MIT License**. Add a `LICENSE` file at the repository root if you have not already — GitHub will help you generate one from its UI.
